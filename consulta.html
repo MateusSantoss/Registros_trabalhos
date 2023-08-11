@@ -21,33 +21,50 @@
     
     <script src='app.js'></script>
 
+     <style type="text/css">
+
+      @media (min-width: 720px) {
+        header {
+          font-size: 3em;
+        }
+   
+      }
+    
+   
+
+  </style>
+
 	</head>
 
   <body onload='carregaListaDespesas()'>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+             <img src="logo.png" width="50" height="35" alt="Registro_trabalho">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-           <img src="logo.png" width="50" height="35" alt="Orçamento pessoal">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Cadastro</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="consulta.html">Consulta</a>
-            </li>
-          </ul>
-          
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Cadastro</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="consulta.html">Consulta</a>
+              </li>
+            </ul>
+            
+          </div>
         </div>
-      </div>
     </nav>
+      
+    </header>
+
+
+    
 
     <div class="container">
       <div class="row mb-5">
@@ -56,16 +73,16 @@
         </div>
       </div>
 
-      <div class="row mb-2">
-        <div class="col-md-12">
-          <select class="form-control" id="ano">
+      <div class="row mb-3">
+        <div class="col-md-6 ">
+          <select class="form-control mb-3" id="ano">
             <option value="">Ano</option>
             <option value="2023">2023</option>
           </select>
         </div>
 
-        <div class="col-md-12">
-          <select class="form-control" id="mes">
+        <div class="col-md-6 col-sm-12">
+          <select class="form-control mb-3" id="mes">
             <option value="">Mês</option>
             <option value="1">Janeiro</option>
             <option value="2">Fevereiro</option>
@@ -81,31 +98,37 @@
             <option value="12">Dezembro</option>
           </select>
         </div>
-        
-        <div class="col-md-12">
-          <input type="text" class="form-control" placeholder="Dia" id="dia" />
+        <!--row-->
+         <div class="row">
+               <div class="col-md-6 mb-3">
+                 <input type="text" class="form-control mb-3" placeholder="Dia" id="dia" >
+               </div>
+
+             <div class="col-md-6  mb-3">
+                <select class="form-control" id="periodo">
+                   <option value="">periodo</option>
+                   <option value="1">manhã</option>
+                   <option value="2">tarde</option>
+                   <option value="3">dia inteiro</option>
+            
+                </select>
+             </div>
+       </div>
+       <!--./row-->
+
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <input type="text" class="form-control mb-3" placeholder="Descrição" id="descricao" />
         </div>
 
-        <div class="col-md-12">
-          <select class="form-control" id="tipo">
-            <option value = "">Tipo</option>
-            <option value="1">Alimentação</option>
-            <option value="2">Educação</option>
-            <option value="3">Lazer</option>
-            <option value="4">Saúde</option>
-            <option value="5">Transporte</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="row  mb-5">
-        <div class="col-md-12">
-          <input type="text" class="form-control" placeholder="Descrição" id="descricao" />
+        <div class="col-md-4  mb-3">
+          <input type="text" class="form-control mb-3" placeholder="Valor" id="valor" />
         </div>
 
-        <div class="col-md-12">
-          <input type="text" class="form-control" placeholder="Valor" id="valor" />
+        <div class="col-md-4 ">
+          <input type="text" class="form-control mb-3" placeholder="trabalhadores" id="trabalhadores" />
         </div>
+
 
         <div class="col-md-12 d-flex justify-content-end">
           <button type="button" class="btn btn-primary" onclick="pesquisarDespesa()">
@@ -115,7 +138,7 @@
       </div>
 
       <div class="row">
-        <div class="col">
+        <div class="col-md-12">
           <table class="table" >
             <thead>
               <tr>
@@ -146,13 +169,14 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">Despesa removida com sucesso</div>
+          <div class="modal-body">Registro removida com sucesso</div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal" class="btn btn-success" onclick="modal()">Voltar</button>
           </div>
         </div>
       </div>
     </div>
+    <footer style="color: blue"> &copy; DEVLOPER BY MATEUS SANTOS</footer>
   </body>	
 
 

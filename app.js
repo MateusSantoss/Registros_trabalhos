@@ -188,7 +188,7 @@ function criarDespesa() {
 		$('#modal_despesa').modal('show')
 		document.getElementById('modal_header').className = 'modal-header text-success'
 		document.getElementById('modal_titulo').innerHTML = 'Sucesso'
-		document.getElementById('modal_body').innerHTML = 'Despesa cadastrada com sucesso'
+		document.getElementById('modal_body').innerHTML = ' Tudo certo!'
 		document.getElementById('modal_btn').innerHTML = 'voltar'
 		document.getElementById('modal_btn').className = 'btn btn-success'
 	   ano.value = ''
