@@ -34,8 +34,6 @@
 	</head>
 
   <body>
-
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
   <div class="container">
     <a class="navbar-brand" href="#">
@@ -59,24 +57,29 @@
   </div>
 </nav>
 
-    <div class="container">
-      <div class="row">
-        <div class="col mb-5">
-          <h1 class="display-4">Registro de Dia de trabalho</h1>
-        </div>
-      </div>
 
-      <button class="btn btn-outline-primary mb-3">Preencher data automaticamente</button>
+    <!-- Horizontal Form -->
+      <div class="container col-sm-4 mt-5">
+        <div class="card card-dark">
+              <div class="card-header ">
+                <div class="row justify-content-center">
+                  <img src="assets/imgs/logo.jpg"  class= ""style="width: 10%; height: 10%; border-radius: 30px;"> </div>
+                
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal">
+                <div class="card-body">
 
-      <div class="row mb-3">
-        <div class="col-md-12">
+                  <div class="row mb-3">
+        <div class="row">
           <select class="form-control mb-3" id="ano">
             <option value="">Ano</option>
             <option value="2023">2023</option>
           </select>
         </div>
 
-        <div class="col-md-12">
+        <div class="row">
           <select class="form-control mb-3" id="mes">
             <option value="">Mês</option>
             <option value="1">Janeiro</option>
@@ -94,11 +97,11 @@
           </select>
         </div>
         
-        <div class="col-md-12">
+        <div class="row">
           <input type="text" class="form-control mb-3" placeholder="Dia" id="dia" />
         </div>
 
-        <div class="col-md-12 mb-3">
+        <div class="row mb-3">
           <select class="form-control" id="periodo">
             <option value="">periodo</option>
             <option value="1">manhã</option>
@@ -109,30 +112,30 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-12">
+      
+        <div class="row">
           <input type="text" class="form-control mb-3" placeholder="Descrição" id="descricao" />
         </div>
 
-        <div class="col-md-12">
+        <div class="row">
           <input type="text" class="form-control mb-3" placeholder="Valor" id="valor" />
         </div>
 
-        <div class="col-md-12">
+        <div class="row">
           <input type="text" class="form-control mb-3" placeholder="trabalhadores" id="trabalhadores" />
         </div>
 
 
-        <div class="col-sm-2 mt-2 ml-3 d-flex ">
+        <div class="row mt-2 ml-3 d-flex ">
           <button type="button" class="btn btn-primary" onclick="criarDespesa()">
 
             <i class="fas fa-plus"></i>
           </button>
-        </div>
-      </div>
+        
+        </form>
 
-    </div>
-    
+
+        
 
 
 
