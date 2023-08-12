@@ -3,9 +3,11 @@
 	<head>
     <meta charset="utf-8" />
 		<title>Dias de trabalho</title>
+    
 
 		<!-- Bootstrap início -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 
     
      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -16,10 +18,20 @@
     <!--fontawesome-->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
+    
+    
+
    
 
     
     <script src='app.js'></script>
+
+    <!--html2pdf.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+     <!--canvas-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
      <style type="text/css">
 
@@ -36,7 +48,10 @@
 
 	</head>
 
-  <body onload='carregaListaDespesas()'>
+  <body onload='carregaListaRegistros()'
+  >
+
+  
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
         <div class="container">
@@ -117,28 +132,43 @@
        <!--./row-->
 
       <div class="row">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 mb-3">
           <input type="text" class="form-control mb-3" placeholder="Descrição" id="descricao" />
         </div>
 
-        <div class="col-md-4  mb-3">
+        <div class="col-md-6  mb-3">
           <input type="text" class="form-control mb-3" placeholder="Valor" id="valor" />
         </div>
 
-        <div class="col-md-4 ">
-          <input type="text" class="form-control mb-3" placeholder="trabalhadores" id="trabalhadores" />
+        <div class="row">
+          <div class="col-md-6 ">
+            <input type="text" class="form-control mb-3" placeholder="trabalhadores" id="trabalhadores" />
+          </div>
+
+          <div class="col-md-6">
+            <input type="text" class="form-control mb-3" placeholder="local" id="local" />
+            
+          </div>
+          
+
         </div>
+
+        
 
 
         <div class="col-md-12 d-flex justify-content-end">
-          <button type="button" class="btn btn-primary" onclick="pesquisarDespesa()">
+          <button type="button" class="btn btn-primary" onclick="pesquisarRegistro()">
             <i class="fas fa-search"></i>
           </button>
+
+          <button onclick="gerarPdf()"class="row btn btn-outline-primary ml-3">Gerar pdf</button>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-12">
+
+
+      <div class="row" id="content">
+        <div class="col-md-12" >
           <table class="table" >
             <thead>
               <tr>
@@ -147,14 +177,17 @@
                 <th>Descrição</th>
                 <th>Valor</th>
                 <th>trabalhadores</th>
+                <th>local</th>
               </tr>
             </thead>
 
-            <tbody id='listaDespesas'>
+            <tbody id='listaRegistros'>
             </tbody>
+
           </table>
         </div>
       </div>
+
     </div>
 
      

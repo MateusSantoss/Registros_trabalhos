@@ -1,5 +1,5 @@
-class Despesa {
-	constructor(ano, mes, dia, periodo, descricao, valor, trabalhadores) {
+class Registro {
+	constructor(ano, mes, dia, periodo, descricao, valor, trabalhadores, local) {
 		this.ano = ano
 		this.mes = mes
 		this.dia = dia
@@ -7,6 +7,7 @@ class Despesa {
 		this.descricao = descricao
 		this.valor = valor
 		this.trabalhadores = trabalhadores
+		this.local = local
 	}
 
 	validarDados() {
@@ -17,7 +18,8 @@ class Despesa {
       this.periodo === undefined || this.periodo === '' || this.periodo === null ||
       this.descricao === undefined || this.descricao === '' || this.descricao === null ||
       this.valor === undefined || this.valor === '' || this.valor === null ||
-      this.trabalhadores === undefined || this.trabalhadores === '' || this.trabalhadores === null
+      this.trabalhadores === undefined || this.trabalhadores === '' || this.trabalhadores === null ||
+      this.local === undefined || this.local === '' || this.local === null
     ) {
       return false;
     }
@@ -53,78 +55,78 @@ class Bd {
 
 	recuperarTodosRegistros() {
 
-		//array de despesas
-		let despesas = Array()
+		//array de registros
+		let registros = Array()
 		
 
 		let id = localStorage.getItem('id')
 
-		//recuperar todas as despesas cadastradas em localStorage
+		//recuperar todas as registros cadastradas em localStorage
 		for(let i = 1; i <= id; i++) {
 
-			//recuperar a despesa
+			//recuperar a registro
 
-			let despesa = JSON.parse((localStorage.getItem(i)))
+			let registro = JSON.parse((localStorage.getItem(i)))
 			
 
 			//existe a possibilidade de haver índices que foram pulados/removidos
 			//nestes casos nós vamos pular esses índices
-			if (despesa === null) {
+			if (registro === null) {
 				continue
 			}
 
 			
-            despesa.id = i
+            registro.id = i
 
 
-			despesas.push(despesa)
+			registros.push(registro)
 			
 			
 		}
 		
-		return despesas
+		return registros
 
 
 
 		
 	}
-	pesquisar(despesa) {
+	pesquisar(registro) {
 		let filtrarRegistros = Array()
 		filtrarRegistros = this.recuperarTodosRegistros()
         //ano
-        if (despesa.ano != '') {
-        	filtrarRegistros = filtrarRegistros.filter(f => despesa.ano == f.ano)
+        if (registro.ano != '') {
+        	filtrarRegistros = filtrarRegistros.filter(f => registro.ano == f.ano)
 
         }
         //mes
-        if (despesa.mes != '') {
-        	filtrarRegistros = filtrarRegistros.filter(f => despesa.mes == f.mes)
+        if (registro.mes != '') {
+        	filtrarRegistros = filtrarRegistros.filter(f => registro.mes == f.mes)
 
         }
         //dia
-        if (despesa.dia != '') {
-        	filtrarRegistros = filtrarRegistros.filter(f => despesa.dia == f.dia)
+        if (registro.dia != '') {
+        	filtrarRegistros = filtrarRegistros.filter(f => registro.dia == f.dia)
 
         }
         //periodo
-        if (despesa.periodo != '') {
-        	filtrarRegistros = filtrarRegistros.filter(f => despesa.periodo == f.periodo)
+        if (registro.periodo != '') {
+        	filtrarRegistros = filtrarRegistros.filter(f => registro.periodo == f.periodo)
 
         }
         //descricao
-        if (despesa.descricao != '') {
-        	filtrarRegistros = filtrarRegistros.filter(f => despesa.descricao == f.descricao)
+        if (registro.descricao != '') {
+        	filtrarRegistros = filtrarRegistros.filter(f => registro.descricao == f.descricao)
 
         }
         //valor
-        if (despesa.valor != '') {
-        	filtrarRegistros = filtrarRegistros.filter(f => despesa.valor == f.valor)
+        if (registro.valor != '') {
+        	filtrarRegistros = filtrarRegistros.filter(f => registro.valor == f.valor)
 
         }
 
         //trabalhadores
-        if (despesa.trabalhadores != '') {
-        	filtrarRegistros = filtrarRegistros.filter(f => despesa.trabalhadores == f.trabalhadores)
+        if (registro.trabalhadores != '') {
+        	filtrarRegistros = filtrarRegistros.filter(f => registro.trabalhadores == f.trabalhadores)
 
         }
         
@@ -151,7 +153,7 @@ function mediaDeGastos() {
 	let mediaGastos = Array()
 	mediaGastos = bd.pesquisar()
 
-	console.log(mediaGastos)
+	
 
 }
 
@@ -160,7 +162,7 @@ function mediaDeGastos() {
 let bd = new Bd()
 
 
-function criarDespesa() {
+function criarRegistro() {
 
 	let ano = document.getElementById('ano')
 	let mes = document.getElementById('mes')
@@ -169,23 +171,27 @@ function criarDespesa() {
 	let descricao = document.getElementById('descricao')
 	let valor = document.getElementById('valor')
 	let trabalhadores = document.getElementById('trabalhadores')
+	let local = document.getElementById('local')
 
-	let despesa = new Despesa(
+
+	let registro = new Registro(
 		ano.value, 
 		mes.value, 
 		dia.value, 
 		periodo.value, 
 		descricao.value,
 		valor.value,
-		trabalhadores.value
+		trabalhadores.value,
+		local.value
 	)
+	
 
 	
 
 
-	//despesa.validarDespesa ()
-	if (despesa.validarDados()) {
-		$('#modal_despesa').modal('show')
+	//registro.validarregistro ()
+	if (registro.validarDados()) {
+		$('#modal_registro').modal('show')
 		document.getElementById('modal_header').className = 'modal-header text-success'
 		document.getElementById('modal_titulo').innerHTML = 'Sucesso'
 		document.getElementById('modal_body').innerHTML = ' Tudo certo!'
@@ -198,18 +204,19 @@ function criarDespesa() {
 	   descricao.value = ''
        valor.value = ''
        trabalhadores.value = ''
-       bd.gravar(despesa)
+       local.value = ''
+       bd.gravar(registro)
 
 
 	}else {
 		
-		$('#modal_despesa').modal('show')
+		$('#modal_registro').modal('show')
 		document.getElementById('modal_header').className = 'modal-header text-danger'
 		document.getElementById('modal_titulo').innerHTML = 'Erro'
 		document.getElementById('modal_body').innerHTML = 'Erro, verifique se todos os dados foram preenchidos'
 		document.getElementById('modal_btn').innerHTML = 'voltar e corrigir'
 		document.getElementById('modal_btn').className = 'btn btn-danger'
-
+    
 
 	}
 
@@ -218,20 +225,21 @@ function criarDespesa() {
 
 	 
 	 }
-function carregaListaDespesas(despesas = Array(), filtro = false) {
+function carregaListaRegistros(registros = Array(), filtro = false) {
 
 	
-     if (despesas.length == 0 && filtro == false) {
-     	despesas = bd.recuperarTodosRegistros() 
+     if (registros.length == 0 && filtro == false) {
+     	registros = bd.recuperarTodosRegistros() 
+     	
      }
 	
 
-	let listasDespesas = document.getElementById('listaDespesas')
-	listasDespesas.innerHTML = ''
+	let listasRegistros = document.getElementById('listaRegistros')
+	listasRegistros.innerHTML = ''
 	
 
-	despesas.forEach(function(d) {
-		let linha = listasDespesas.insertRow()
+	registros.forEach(function(d) {
+		let linha = listasRegistros.insertRow()
 
 		
 		
@@ -260,21 +268,22 @@ function carregaListaDespesas(despesas = Array(), filtro = false) {
 		linha.insertCell(2).innerHTML = d.descricao
 		linha.insertCell(3).innerHTML = d.valor
 		linha.insertCell(4).innerHTML = d.trabalhadores
-        //remover despesas
+		linha.insertCell(5).innerHTML = d.local
+        //remover registros
 		let btn = document.createElement('button')
 		btn.className = 'btn btn-danger'
 		btn.innerHTML = "<i class='fas fa-times'></i>"
-		btn.id = `id_despesa${d.id}`
+		btn.id = `id_registro${d.id}`
 		btn.onclick = function () {
 			//alert(this.id)
-			let id = this.id.replace('id_despesa', '')
+			let id = this.id.replace('id_registro', '')
 			bd.remover(id)
 			$('#modal_consulta').modal('show')
 			console.log('tudo certo até aqui')
 			window.location.reload()
 
 		}
-		linha.insertCell(5).append(btn)
+		linha.insertCell(6).append(btn)
 		
 
 	})
@@ -288,7 +297,7 @@ function modal () {
 	
 }
 
-function pesquisarDespesa () {
+function pesquisarRegistro () {
 	let ano = document.getElementById('ano').value
 	let mes = document.getElementById('mes').value
 	let dia = document.getElementById('dia').value
@@ -296,13 +305,14 @@ function pesquisarDespesa () {
 	let descricao = document.getElementById('descricao').value
 	let valor = document.getElementById('valor').value
 	let trabalhadores = document.getElementById('trabalhadores').value
+	let local = document.getElementById('local').value
 
-	let despesa = new Despesa (ano, mes, dia, periodo, descricao, valor, trabalhadores)
-	let despesas = bd.pesquisar(despesa)
+	let registro = new Registro (ano, mes, dia, periodo, descricao, valor, trabalhadores, local)
+	let registros = bd.pesquisar(registro)
 
 
 
-	carregaListaDespesas(despesas, true)
+	carregaListaRegistros(registros, true)
 
 	
 	
@@ -313,3 +323,25 @@ function pesquisarDespesa () {
 	
 
 }
+
+function gerarPdf() {
+	console.log('pdf')
+	//conteudo do pdf
+	const content = document.querySelector('#content')
+
+
+	//configuração do arquivo final pdf 
+
+	if (content) {
+	  const options  = {
+		  margin:[10, 10, 10, 10],
+		  filename: "Dias_de_trabalho.pdf",
+		  html2canvas: {scale: 2},
+		  jsPDF: {unit: "mm", format: "a4", orientation: "portrait"}
+	   }
+       
+      //gerar e baixar o Pdf
+      html2pdf().set(options).from(content).save(); 
+      } 
+
+    }
