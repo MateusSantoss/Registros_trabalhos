@@ -1,5 +1,25 @@
+function getData () {
+        
+	var data = new Date();
+	var dia = String(data.getDate()).padStart(2, '0');
+	var mes = String(data.getMonth() + 1).padStart(2);
+	var ano = data.getFullYear();
+	dataAtual = dia + '/' + mes + '/' + ano;
+	console.log(mes)
+	
+	
+	
+	
+
+   document.getElementById('ano').value = ano
+   document.getElementById('dia').value = dia
+   document.getElementById('mes').value = parseInt(mes)
+   
+  }
+
+
 class Registro {
-	constructor(ano, mes, dia, periodo, descricao, valor, trabalhadores, local) {
+	constructor(ano, mes, dia, periodo, descricao, valor, trabalhadores, local, cargaHoraria) {
 		this.ano = ano
 		this.mes = mes
 		this.dia = dia
@@ -8,6 +28,7 @@ class Registro {
 		this.valor = valor
 		this.trabalhadores = trabalhadores
 		this.local = local
+		this.cargaHoraria = cargaHoraria
 	}
 
 	validarDados() {
@@ -19,7 +40,8 @@ class Registro {
       this.descricao === undefined || this.descricao === '' || this.descricao === null ||
       this.valor === undefined || this.valor === '' || this.valor === null ||
       this.trabalhadores === undefined || this.trabalhadores === '' || this.trabalhadores === null ||
-      this.local === undefined || this.local === '' || this.local === null
+      this.local === undefined || this.local === '' || this.local === null ||
+	  this.cargaHoraria === undefined || this.cargaHoraria === '' || this.cargaHoraria === null
     ) {
       return false;
     }
@@ -90,6 +112,9 @@ class Bd {
 
 		
 	}
+
+	
+	
 	pesquisar(registro) {
 		let filtrarRegistros = Array()
 		filtrarRegistros = this.recuperarTodosRegistros()
@@ -149,13 +174,7 @@ class Bd {
 
 		 }
 
-function mediaDeGastos() {
-	let mediaGastos = Array()
-	mediaGastos = bd.pesquisar()
 
-	
-
-}
 
 
 
@@ -323,6 +342,62 @@ function pesquisarRegistro () {
 	
 
 }
+
+//Somatoria dos valores
+function somaValores () {
+	let registros = bd.recuperarTodosRegistros();
+	
+   
+	
+	
+
+	let valores = {
+		mes:0,
+		ano:0,
+		total:0,
+	}
+
+	let soma = 0
+	let valorAno = 0
+	let ValorMes = 0
+
+	
+		registros.forEach(
+			valor => {
+				if (valor.ano) 
+				{ 	
+					valorAno += parseInt(valor.valor)
+					valores.ano = valorAno
+					
+				} 
+		   
+				if (valor.mes) 
+				{ 
+					ValorMes += parseInt(valor.valor)
+					valores.mes = ValorMes
+					
+				}
+		
+		   soma += parseInt(valor.valor)
+			
+			
+		}); 
+	
+		valores.total = soma;
+		 
+		console.log(` valor total ${valores.total}`)
+		console.log(` valores desse ano ${valores.ano}`)
+		console.log(` valor desse  mes ${valores.mes}`)
+
+		document.getElementById('ganhosMes').innerHTML = `${valores.mes} R$`
+		document.getElementById('ganhosAno').innerHTML = `${valores.ano} R$` 
+		document.getElementById('ganhosTotais').innerHTML = `${valores.total} R$`
+
+	}
+	 
+
+	
+
 
 function gerarPdf() {
 	console.log('pdf')
