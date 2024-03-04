@@ -69,115 +69,9 @@
     </nav>
       
     </header>
-
-     <button onclick="somaValores ()">somarValores</button>
     
-
-    <div class="container-fluid">
-      <div class=" row ">
-        <div class="col">
-          <h1 class="display-4">Consultar dias de trabalho</h1>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-lg-5">
-          <select class="form-control mb-3" id="ano">
-            <option value="">Ano</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-          </select>
-        </div>
-
-        <div class="col-12 col-lg-5 mb-3">
-          <select class="form-control" id="mes">
-            <option value="">Mês</option>
-            <option value="1">Janeiro</option>
-            <option value="2">Fevereiro</option>
-            <option value="3">Março</option>
-            <option value="4">Abril</option>
-            <option value="5">Maio</option>
-            <option value="6">Junho</option>
-            <option value="7">Julho</option>
-            <option value="8">Agosto</option>
-            <option value="9">Setembro</option>
-            <option value="10">Outubro</option>
-            <option value="11">Novembro</option>
-            <option value="12">Dezembro</option>
-          </select>
-        </div>
-        
-         
-          <div class="col-12 col-lg-5">
-              <input type="text" class="form-control mb-3 col-12 input" placeholder="Dia" id="dia" >
-          </div>
-
-             <div class="col-12 mb-3 col-lg-5">
-                <select class="form-control" id="periodo">
-                   <option value="">periodo</option>
-                   <option value="1">manhã</option>
-                   <option value="2">tarde</option>
-                   <option value="3">dia inteiro</option>
-                </select>
-             </div>
+    <section id="ganhos" class="mx-4 mb-5">
       
-
-        <div class="col-12 col-lg-5">
-          <input type="text" class="form-control mb-3 input" placeholder="Descrição" id="descricao" />
-        </div>
-
-        <div class="col-12 col-lg-5">
-          <input type="text" class="form-control mb-3 input" placeholder="Valor" id="valor" />
-        </div>
-
-   
-
-          <div class="col-12 col-lg-5">
-            <input type="text" class="form-control mb-3 input" placeholder="trabalhadores" id="trabalhadores" />
-          </div>
-
-          <div class="col-12 col-lg-5">
-            <input type="text" class="form-control mb-3 input" placeholder="local" id="local" />
-          </div>
-      
-
-        
-
-
-        <div class="mx-3">
-          <button type="button" class="btn btn-primary" onclick="pesquisarRegistro()">
-            <i class="fas fa-search"></i>
-          </button>
-
-          <button onclick="gerarPdf()"class="row btn btn-outline-primary ml-3">Gerar pdf</button>
-        </div>
-      </div>
-
-
-
-      
-      <table class="table-responsive table " >
-        <thead >
-          <tr>
-            <th>Data</th>
-            <th>período</th>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>trabalhadores</th>
-            <th>local</th>
-          </tr>
-        </thead>
-
-        <tbody id='listaRegistros'>
-        </tbody>
-
-      </table>
- 
-    
-    </div>
-
-    <section id="ganhos">
-      <h1 class="display-4">Detalhes</h1>
 
 
       <div class="row">
@@ -222,15 +116,93 @@
         </div>
       </div>
 
-      
-       
+    </section>
+    
 
-      <div class="bg-primary w-32">
-        w
-
+    <div class="container-fluid">
+      <div class=" row ">
+        <div class="col">
+          <h1 class="display-4">Consultar dias de trabalho</h1>
+        </div>
       </div>
 
-    </section>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-lg-5 mb-3"> 
+          <input type="date" id="data" class="w-100 h-100">
+        </div>
+              
+
+             <div class="col-md-12 col-sm-12 col-lg-5 mb-3">
+                <select class="form-control" id="periodo">
+                   <option value="">periodo</option>
+                   <option value="1">manhã</option>
+                   <option value="2">tarde</option>
+                   <option value="3">dia inteiro</option>
+            
+                </select>
+             </div>
+      
+      
+        <div class="col-md-12 col-lg-5">
+          <input type="text" class="form-control mb-3" placeholder="Descrição" id="descricao" />
+        </div>
+
+        <div class="col-md-12  col-lg-5">
+          <input type="number" class="form-control mb-3" placeholder="Valor: ex: 2.30" id="valor" />
+        </div>
+
+        <div class="col-md-12 col-lg-5 ">
+          <input type="text" class="form-control mb-3" placeholder="trabalhadores" id="trabalhadores" />
+        </div>
+
+
+        <div class="col-md-12 col-lg-5 ">
+          <input type="text" class="form-control mb-3" placeholder="local" id="local" />
+        </div>
+
+        <div class="col-md-12 col-lg-5 ">
+          <input type="number" class="form-control mb-3" placeholder="Carga horária - ex: 3.30" id="cargaHoraria" />
+        </div>
+      </div>
+
+
+        
+
+
+        <div class="mx-3">
+          <button type="button" class="btn btn-primary" onclick="pesquisarRegistro()">
+            <i class="fas fa-search"></i>
+          </button>
+
+          <button onclick="gerarPdf()"class="row btn btn-outline-primary ml-3">Gerar pdf</button>
+        </div>
+      </div>
+
+
+
+      
+      <table class="table-responsive table " >
+        <thead >
+          <tr>
+            <th>Data</th>
+            <th>período</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>trabalhadores</th>
+            <th>local</th>
+            <th>Carga horária</th>
+          </tr>
+        </thead>
+
+        <tbody id='listaRegistros'>
+        </tbody>
+
+      </table>
+ 
+    
+    </div>
+
+    
 
     <div class="modal fade" id="modal_consulta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">

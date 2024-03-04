@@ -22,7 +22,7 @@
 
 	  </head>
 
-     <body>
+     <body onload="getData()">
        <header>
           <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
 
@@ -58,37 +58,14 @@
         </div>
       </div>
 
-      <button class="btn btn-outline-primary mb-3" onclick="getData()">Preencher data automaticamente</button>
+   
+      <div class="row mb-3">
+              
 
-      <di class="row mb-3">
-        <div class="col-md-12 col-lg-5">
-          <select class="form-control mb-3" id="ano">
-            <option value="">Ano</option>
-            <option value="2024">2024</option>
-          </select>
-          
+        <div class="col-md-12 col-sm-12 col-lg-5 mb-3"> 
+          <input type="date" id="data" class="w-100 h-100">
         </div>
-
-        <div class="col-md-12 col-sm-12 col-lg-5">
-          <select class="form-control mb-3" id="mes">
-            <option value="">Mês</option>
-            <option value="1">Janeiro</option>
-            <option value="2">Fevereiro</option>
-            <option value="3">Março</option>
-            <option value="4">Abril</option>
-            <option value="5">Maio</option>
-            <option value="6">Junho</option>
-            <option value="7">Julho</option>
-            <option value="8">Agosto</option>
-            <option value="9">Setembro</option>
-            <option value="10">Outubro</option>
-            <option value="11">Novembro</option>
-            <option value="12">Dezembro</option>
-          </select>
-        </div>
-               <div class="col-md-12 col-lg-5">
-                 <input type="text" class="form-control mb-3" placeholder="Dia" id="dia" >
-               </div>
+              
 
              <div class="col-md-12 col-sm-12 col-lg-5 mb-3">
                 <select class="form-control" id="periodo">
@@ -106,7 +83,7 @@
         </div>
 
         <div class="col-md-12  col-lg-5">
-          <input type="text" class="form-control mb-3" placeholder="Valor" id="valor" />
+          <input type="number" class="form-control mb-3" placeholder="Valor: ex: 2.30" id="valor" />
         </div>
 
         <div class="col-md-12 col-lg-5 ">
@@ -117,6 +94,11 @@
         <div class="col-md-12 col-lg-5 ">
           <input type="text" class="form-control mb-3" placeholder="local" id="local" />
         </div>
+
+        <div class="col-md-12 col-lg-5 ">
+          <input type="number" class="form-control mb-3" placeholder="Carga horária - ex: 3.30" id="cargaHoraria" />
+        </div>
+      </div>
 
 
         <div class="col-sm-2 mt-2 ml-3 d-flex ">

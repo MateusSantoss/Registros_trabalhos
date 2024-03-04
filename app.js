@@ -1,20 +1,17 @@
+
 function getData () {
         
-	var data = new Date();
-	var dia = String(data.getDate()).padStart(2, '0');
-	var mes = String(data.getMonth() + 1).padStart(2);
-	var ano = data.getFullYear();
-	dataAtual = dia + '/' + mes + '/' + ano;
-	console.log(mes)
+	let data = new Date();
+	let dataFormatada = data.toISOString().slice(0,10);
 	
 	
+    document.getElementById('data').value = new Date(data.getTime() - (data.getTimezoneOffset() * 60000)).toISOString().slice(0, 10);
 	
-	
+	console.log(dataFormatada)
 
-   document.getElementById('ano').value = ano
-   document.getElementById('dia').value = dia
-   document.getElementById('mes').value = parseInt(mes)
-   
+
+
+	
   }
 
 
@@ -42,6 +39,7 @@ class Registro {
       this.trabalhadores === undefined || this.trabalhadores === '' || this.trabalhadores === null ||
       this.local === undefined || this.local === '' || this.local === null ||
 	  this.cargaHoraria === undefined || this.cargaHoraria === '' || this.cargaHoraria === null
+	  
     ) {
       return false;
     }
@@ -152,6 +150,11 @@ class Bd {
         //trabalhadores
         if (registro.trabalhadores != '') {
         	filtrarRegistros = filtrarRegistros.filter(f => registro.trabalhadores == f.trabalhadores)
+        }
+
+        //carga Horária 
+		if (registro.cargaHoraria != '') {
+        	filtrarRegistros = filtrarRegistros.filter(f => registro.cargaHoraria == f.cargaHoraria)
 
         }
         
@@ -182,27 +185,39 @@ let bd = new Bd()
 
 
 function criarRegistro() {
+	
+	let dataSelecionada = document.getElementById('data').value 
+	
+	let partesData = dataSelecionada.split("-")
+	
+	let ano = partesData[0]
+    let mes = partesData[1]
+    let dia = partesData[2]
+     
 
-	let ano = document.getElementById('ano')
-	let mes = document.getElementById('mes')
-	let dia = document.getElementById('dia')
+     
+	
 	let periodo = document.getElementById('periodo')
 	let descricao = document.getElementById('descricao')
 	let valor = document.getElementById('valor')
 	let trabalhadores = document.getElementById('trabalhadores')
 	let local = document.getElementById('local')
+	let cargaHoraria = document.getElementById('cargaHoraria')
 
 
 	let registro = new Registro(
-		ano.value, 
-		mes.value, 
-		dia.value, 
+		ano, 
+		mes, 
+		dia, 
 		periodo.value, 
 		descricao.value,
 		valor.value,
 		trabalhadores.value,
-		local.value
+		local.value,
+		cargaHoraria.value
 	)
+
+	
 	
 
 	
@@ -216,15 +231,14 @@ function criarRegistro() {
 		document.getElementById('modal_body').innerHTML = ' Tudo certo!'
 		document.getElementById('modal_btn').innerHTML = 'voltar'
 		document.getElementById('modal_btn').className = 'btn btn-success'
-	   ano.value = ''
-	   mes.value = ''
-	   dia.value = ''
-	   periodo.value = ''
-	   descricao.value = ''
-       valor.value = ''
-       trabalhadores.value = ''
-       local.value = ''
-       bd.gravar(registro)
+		dataSelecionada.value = ''
+		periodo.value = ''
+		descricao.value = ''
+		valor.value = ''
+		trabalhadores.value = ''
+		local.value = ''
+		cargaHoraria.value = ''
+		bd.gravar(registro)
 
 
 	}else {
@@ -241,10 +255,13 @@ function criarRegistro() {
 
 	
 	
-
+         
 	 
 	 }
+
+	 
 function carregaListaRegistros(registros = Array(), filtro = false) {
+	
 
 	
      if (registros.length == 0 && filtro == false) {
@@ -288,6 +305,13 @@ function carregaListaRegistros(registros = Array(), filtro = false) {
 		linha.insertCell(3).innerHTML = d.valor
 		linha.insertCell(4).innerHTML = d.trabalhadores
 		linha.insertCell(5).innerHTML = d.local
+		if (d.cargaHoraria == undefined || d.cargaHoraria == null || d.cargaHoraria == NaN || d.cargaHoraria == "") {
+            linha.insertCell(6).innerHTML = 'Sem registro'
+		} else {
+			linha.insertCell(6).innerHTML = d.cargaHoraria
+		}
+		
+		
         //remover registros
 		let btn = document.createElement('button')
 		btn.className = 'btn btn-danger'
@@ -302,7 +326,7 @@ function carregaListaRegistros(registros = Array(), filtro = false) {
 			window.location.reload()
 
 		}
-		linha.insertCell(6).append(btn)
+		linha.insertCell(7).append(btn)
 		
 
 	})
@@ -317,18 +341,25 @@ function modal () {
 }
 
 function pesquisarRegistro () {
-	let ano = document.getElementById('ano').value
-	let mes = document.getElementById('mes').value
-	let dia = document.getElementById('dia').value
+	let dataSelecionada = document.getElementById('data').value 
+	
+	let partesData = dataSelecionada.split("-")
+	
+	let ano = partesData[0]
+    let mes = partesData[1]
+    let dia = partesData[2]
+	console.log(dia)
+	
 	let periodo = document.getElementById('periodo').value
 	let descricao = document.getElementById('descricao').value
 	let valor = document.getElementById('valor').value
 	let trabalhadores = document.getElementById('trabalhadores').value
 	let local = document.getElementById('local').value
-
-	let registro = new Registro (ano, mes, dia, periodo, descricao, valor, trabalhadores, local)
+    let cargaHoraria = document.getElementById('cargaHoraria').value
+	let registro = new Registro (parseInt(ano), parseInt(mes), parseInt(dia), periodo, descricao, valor, trabalhadores, local, cargaHoraria)
 	let registros = bd.pesquisar(registro)
-
+	console.log(registro)
+	console.log(dia)
 
 
 	carregaListaRegistros(registros, true)
@@ -343,42 +374,54 @@ function pesquisarRegistro () {
 
 }
 
+
+
 //Somatoria dos valores
 function somaValores () {
 	let registros = bd.recuperarTodosRegistros();
-	
-   
-	
 	
 
 	let valores = {
 		mes:0,
 		ano:0,
 		total:0,
+		horasTrabalhadas:0
 	}
 
 	let soma = 0
 	let valorAno = 0
 	let ValorMes = 0
+	let cargaHoraria = 0
 
 	
 		registros.forEach(
 			valor => {
 				if (valor.ano) 
 				{ 	
-					valorAno += parseInt(valor.valor)
+					valorAno += parseFloat(valor.valor)
 					valores.ano = valorAno
 					
 				} 
 		   
 				if (valor.mes) 
 				{ 
-					ValorMes += parseInt(valor.valor)
+					ValorMes += parseFloat(valor.valor)
 					valores.mes = ValorMes
 					
 				}
+
+
+				if (valor.cargaHoraria == "") 
+				{ 
+					valor.cargaHoraria = 0
+					
+					
+				}
 		
-		   soma += parseInt(valor.valor)
+		   soma += parseFloat(valor.valor)
+		
+		   cargaHoraria += parseFloat(valor.cargaHoraria)
+		   valores.horasTrabalhadas = cargaHoraria
 			
 			
 		}); 
@@ -388,10 +431,12 @@ function somaValores () {
 		console.log(` valor total ${valores.total}`)
 		console.log(` valores desse ano ${valores.ano}`)
 		console.log(` valor desse  mes ${valores.mes}`)
+		console.log(cargaHoraria)
 
-		document.getElementById('ganhosMes').innerHTML = `${valores.mes} R$`
-		document.getElementById('ganhosAno').innerHTML = `${valores.ano} R$` 
-		document.getElementById('ganhosTotais').innerHTML = `${valores.total} R$`
+		document.getElementById('ganhosMes').innerHTML = `${valores.mes.toFixed(2)} R$`
+		document.getElementById('ganhosAno').innerHTML = `${valores.ano.toFixed(2)} R$` 
+		document.getElementById('ganhosTotais').innerHTML = `${valores.total.toFixed(2)} R$`
+		document.getElementById('horasTrabalhadas').innerHTML = `${valores.horasTrabalhadas.toFixed(2)} Horas`
 
 	}
 	 
