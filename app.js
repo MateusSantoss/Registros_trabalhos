@@ -7,10 +7,6 @@ function getData () {
 	
     document.getElementById('data').value = new Date(data.getTime() - (data.getTimezoneOffset() * 60000)).toISOString().slice(0, 10);
 	
-	console.log(dataFormatada)
-
-
-
 	
   }
 
@@ -169,7 +165,7 @@ class Bd {
 
 
 		remover(id) {
-			console.log(id)
+			
 			localStorage.removeItem(id)
 			
 
@@ -299,7 +295,7 @@ function carregaListaRegistros(registros = Array(), filtro = false) {
 
 		}
 
-		console.log(d)
+		
 		linha.insertCell(1).innerHTML = d.periodo
 		linha.insertCell(2).innerHTML = d.descricao
 		linha.insertCell(3).innerHTML = d.valor
@@ -322,7 +318,7 @@ function carregaListaRegistros(registros = Array(), filtro = false) {
 			let id = this.id.replace('id_registro', '')
 			bd.remover(id)
 			$('#modal_consulta').modal('show')
-			console.log('tudo certo até aqui')
+			
 			window.location.reload()
 
 		}
@@ -341,25 +337,19 @@ function modal () {
 }
 
 function pesquisarRegistro () {
-	let dataSelecionada = document.getElementById('data').value 
-	
-	let partesData = dataSelecionada.split("-")
-	
-	let ano = partesData[0]
-    let mes = partesData[1]
-    let dia = partesData[2]
-	console.log(dia)
-	
+	let ano = document.getElementById('ano').value
+	let mes = document.getElementById('mes').value
+	let dia = '0' + document.getElementById('dia').value
 	let periodo = document.getElementById('periodo').value
 	let descricao = document.getElementById('descricao').value
 	let valor = document.getElementById('valor').value
 	let trabalhadores = document.getElementById('trabalhadores').value
 	let local = document.getElementById('local').value
     let cargaHoraria = document.getElementById('cargaHoraria').value
-	let registro = new Registro (parseInt(ano), parseInt(mes), parseInt(dia), periodo, descricao, valor, trabalhadores, local, cargaHoraria)
+	let registro = new Registro (ano, mes, dia, periodo, descricao, valor, trabalhadores, local, cargaHoraria)
 	let registros = bd.pesquisar(registro)
-	console.log(registro)
-	console.log(dia)
+	
+
 
 
 	carregaListaRegistros(registros, true)
@@ -428,10 +418,8 @@ function somaValores () {
 	
 		valores.total = soma;
 		 
-		console.log(` valor total ${valores.total}`)
-		console.log(` valores desse ano ${valores.ano}`)
-		console.log(` valor desse  mes ${valores.mes}`)
-		console.log(cargaHoraria)
+		
+	
 
 		document.getElementById('ganhosMes').innerHTML = `${valores.mes.toFixed(2)} R$`
 		document.getElementById('ganhosAno').innerHTML = `${valores.ano.toFixed(2)} R$` 
@@ -445,7 +433,7 @@ function somaValores () {
 
 
 function gerarPdf() {
-	console.log('pdf')
+	
 	//conteudo do pdf
 	const content = document.querySelector('#content')
 
