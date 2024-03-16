@@ -7,7 +7,11 @@
     
 
 		<!-- Bootstrap início -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- Bootstrap início -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
 
     
@@ -119,90 +123,9 @@
     
 
     <div class="container-fluid">
-      <div class=" row ">
-        <div class="col">
-          <h1 class="display-4">Consultar dias de trabalho</h1>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-lg-5">
-          <select class="form-control mb-3" id="ano">
-            <option value="">Ano</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-          </select>
-        </div>
-
-        <div class="col-12 col-lg-5 mb-3">
-          <select class="form-control" id="mes">
-            <option value="">Mês</option>
-            <option value="1">Janeiro</option>
-            <option value="2">Fevereiro</option>
-            <option value="3">Março</option>
-            <option value="4">Abril</option>
-            <option value="5">Maio</option>
-            <option value="6">Junho</option>
-            <option value="7">Julho</option>
-            <option value="8">Agosto</option>
-            <option value="9">Setembro</option>
-            <option value="10">Outubro</option>
-            <option value="11">Novembro</option>
-            <option value="12">Dezembro</option>
-          </select>
-        </div>
-        
-         
-          <div class="col-12 col-lg-5">
-              <input type="number" min="1" max="31" class="form-control mb-3 col-12 input" placeholder="Dia" id="dia" >
-          </div>
-
-             <div class="col-12 mb-3 col-lg-5">
-                <select class="form-control" id="periodo">
-                   <option value="">periodo</option>
-                   <option value="1">manhã</option>
-                   <option value="2">tarde</option>
-                   <option value="3">dia inteiro</option>
-                </select>
-             </div>
       
 
-        <div class="col-12 col-lg-5">
-          <input type="text" class="form-control mb-3 input" placeholder="Descrição" id="descricao" />
-        </div>
-
-        <div class="col-12 col-lg-5">
-          <input type="text" class="form-control mb-3 input" placeholder="Valor" id="valor" />
-        </div>
-
-   
-
-          <div class="col-12 col-lg-5">
-            <input type="text" class="form-control mb-3 input" placeholder="trabalhadores" id="trabalhadores" />
-          </div>
-
-          <div class="col-12 col-lg-5">
-            <input type="text" class="form-control mb-3 input" placeholder="local" id="local" />
-          </div>
-
-          <div class="col-md-12 col-lg-5 ">
-            <input type="number" class="form-control mb-3" placeholder="Carga horária - ex: 3.30" id="cargaHoraria" />
-          </div>
       
-
-        
-
-
-        <div class="mx-3">
-          <button type="button" class="btn btn-primary" onclick="pesquisarRegistro()">
-            <i class="fas fa-search"></i>
-          </button>
-
-          <button onclick="gerarPdf()"class="row btn btn-outline-primary ml-3">Gerar pdf</button>
-        </div>
-      </div>
-
-
 
       
       <table class="table-responsive table " id="content">
@@ -228,22 +151,9 @@
 
     
 
-    <div class="modal fade" id="modal_consulta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header text-success">
-            <h5 class="modal-title" >Sucesso</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">Registro removida com sucesso</div>
-          <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-success" onclick="modal()">Voltar</button>
-          </div>
-        </div>
-      </div>
-    </div>
+  
+ 
+
     <div class="d-flex">
       <footer style="color: blue; margin: 0 auto;" class="justify-content-center"> &copy; DEVLOPER BY MATEUS SANTOS</footer>
 

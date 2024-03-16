@@ -1,5 +1,5 @@
 
-function getData () {
+const  getData = () => {
         
 	let data = new Date();
 	let dataFormatada = data.toISOString().slice(0,10);
@@ -43,7 +43,7 @@ class Registro {
   }
 }
 
-class Bd {
+class BancoDeDados {
 
 	constructor() {
 		let id = localStorage.getItem('id')
@@ -58,10 +58,10 @@ class Bd {
 		return parseInt(proximoId) + 1
 	}
 
-	gravar(d) {
+	gravar(registro) {
 		let id = this.getProximoId()
 
-		localStorage.setItem(id, JSON.stringify(d))
+		localStorage.setItem(id, JSON.stringify(registro))
 
 		localStorage.setItem('id', id)
 	}
@@ -177,10 +177,10 @@ class Bd {
 
 
 
-let bd = new Bd()
+let bancoDeDados = new BancoDeDados()
 
 
-function criarRegistro() {
+const criarRegistro = () => {
 	
 	let dataSelecionada = document.getElementById('data').value 
 	
@@ -234,7 +234,7 @@ function criarRegistro() {
 		trabalhadores.value = ''
 		local.value = ''
 		cargaHoraria.value = ''
-		bd.gravar(registro)
+		bancoDeDados.gravar(registro)
 
 
 	}else {
@@ -256,12 +256,12 @@ function criarRegistro() {
 	 }
 
 	 
-function carregaListaRegistros(registros = Array(), filtro = false) {
+const carregaListaRegistros = (registros = Array(), filtro = false) => {
 	
 
 	
      if (registros.length == 0 && filtro == false) {
-     	registros = bd.recuperarTodosRegistros() 
+     	registros = bancoDeDados.recuperarTodosRegistros() 
      	
      }
 	
@@ -270,7 +270,7 @@ function carregaListaRegistros(registros = Array(), filtro = false) {
 	listasRegistros.innerHTML = ''
 	
 
-	registros.forEach(function(d) {
+	registros.forEach((registro) => {
 		let linha = listasRegistros.insertRow()
 
 		
@@ -278,17 +278,17 @@ function carregaListaRegistros(registros = Array(), filtro = false) {
 
 
        
-		linha.insertCell(0).innerHTML = `${d.dia} / ${d.mes} / ${d.ano}` 
+		linha.insertCell(0).innerHTML = `${registro.dia} / ${registro.mes} / ${registro.ano}` 
 		
-		switch (parseInt(d.periodo)) {
+		switch (parseInt(registro.periodo)) {
 		case 1: 
-			d.periodo = 'manhã'
+			registro.periodo = 'manhã'
 			break;
 		case 2: 
-			d.periodo = 'tarde'
+			registro.periodo = 'tarde'
 			break;
 		case 3:
-			d.periodo = 'dia inteiro'
+			registro.periodo = 'dia inteiro'
 			break;
 		
 
@@ -296,15 +296,15 @@ function carregaListaRegistros(registros = Array(), filtro = false) {
 		}
 
 		
-		linha.insertCell(1).innerHTML = d.periodo
-		linha.insertCell(2).innerHTML = d.descricao
-		linha.insertCell(3).innerHTML = d.valor
-		linha.insertCell(4).innerHTML = d.trabalhadores
-		linha.insertCell(5).innerHTML = d.local
-		if (d.cargaHoraria == undefined || d.cargaHoraria == null || d.cargaHoraria == NaN || d.cargaHoraria == "") {
+		linha.insertCell(1).innerHTML = registro.periodo
+		linha.insertCell(2).innerHTML = registro.descricao
+		linha.insertCell(3).innerHTML = registro.valor
+		linha.insertCell(4).innerHTML = registro.trabalhadores
+		linha.insertCell(5).innerHTML = registro.local
+		if (registro.cargaHoraria == undefined || registro.cargaHoraria == null || registro.cargaHoraria == NaN || registro.cargaHoraria == "") {
             linha.insertCell(6).innerHTML = 'Sem registro'
 		} else {
-			linha.insertCell(6).innerHTML = d.cargaHoraria
+			linha.insertCell(6).innerHTML = registro.cargaHoraria
 		}
 		
 		
@@ -312,11 +312,11 @@ function carregaListaRegistros(registros = Array(), filtro = false) {
 		let btn = document.createElement('button')
 		btn.className = 'btn btn-danger'
 		btn.innerHTML = "<i class='fas fa-times'></i>"
-		btn.id = `id_registro${d.id}`
-		btn.onclick = function () {
+		btn.id = `id_registro${registro.id}`
+		btn.onclick =  () => {
 			//alert(this.id)
 			let id = this.id.replace('id_registro', '')
-			bd.remover(id)
+			bancoDeDados.remover(id)
 			$('#modal_consulta').modal('show')
 			
 			window.location.reload()
@@ -330,13 +330,11 @@ function carregaListaRegistros(registros = Array(), filtro = false) {
 
 	
 }
-
-function modal () {
-	window.location.reload()
+const modal = () => window.location.reload()
 	
-}
 
-function pesquisarRegistro () {
+
+const pesquisarRegistro = () => {
 	let ano = document.getElementById('ano').value
 	let mes = document.getElementById('mes').value
 	let dia = '0' + document.getElementById('dia').value
@@ -347,7 +345,7 @@ function pesquisarRegistro () {
 	let local = document.getElementById('local').value
     let cargaHoraria = document.getElementById('cargaHoraria').value
 	let registro = new Registro (ano, mes, dia, periodo, descricao, valor, trabalhadores, local, cargaHoraria)
-	let registros = bd.pesquisar(registro)
+	let registros = bancoDeDados.pesquisar(registro)
 	
 
 
@@ -367,8 +365,20 @@ function pesquisarRegistro () {
 
 
 //Somatoria dos valores
-function somaValores () {
-	let registros = bd.recuperarTodosRegistros();
+//Somatoria dos valores
+ const somaValores = () => {
+	let registros = bancoDeDados
+	.recuperarTodosRegistros();
+
+	let data = new Date();
+	let dataFormatada = data.toISOString().slice(0,10);
+	console.log(dataFormatada)
+
+	let partesData = dataFormatada.split("-")
+	
+	let ano = partesData[0]
+    let mes = partesData[1]
+    let dia = partesData[2]
 	
 
 	let valores = {
@@ -378,61 +388,54 @@ function somaValores () {
 		horasTrabalhadas:0
 	}
 
-	let soma = 0
-	let valorAno = 0
-	let ValorMes = 0
-	let cargaHoraria = 0
-
 	
-		registros.forEach(
-			valor => {
-				if (valor.ano) 
-				{ 	
-					valorAno += parseFloat(valor.valor)
-					valores.ano = valorAno
-					
-				} 
-		   
-				if (valor.mes) 
-				{ 
-					ValorMes += parseFloat(valor.valor)
-					valores.mes = ValorMes
-					
-				}
 
+	console.log(registros)
+	for (let i = 0; i < registros.length; i++) {
+		
+	
+		valores.horasTrabalhadas += parseFloat(registros[i]['cargaHoraria'])
+		valores.total += parseFloat(registros[i]['valor'])
 
-				if (valor.cargaHoraria == "") 
-				{ 
-					valor.cargaHoraria = 0
-					
-					
-				}
-		
-		   soma += parseFloat(valor.valor)
-		
-		   cargaHoraria += parseFloat(valor.cargaHoraria)
-		   valores.horasTrabalhadas = cargaHoraria
+		if (registros[i]['ano'] == ano) {
+			let ano = Array ()
+			ano = registros[i]
+			valores.ano += parseFloat(ano.valor) 
 			
-			
-		}); 
-	
-		valores.total = soma;
-		 
-		
-	
+		 }
 
-		document.getElementById('ganhosMes').innerHTML = `${valores.mes.toFixed(2)} R$`
-		document.getElementById('ganhosAno').innerHTML = `${valores.ano.toFixed(2)} R$` 
-		document.getElementById('ganhosTotais').innerHTML = `${valores.total.toFixed(2)} R$`
-		document.getElementById('horasTrabalhadas').innerHTML = `${valores.horasTrabalhadas.toFixed(2)} Horas`
+		 if (registros[i]['mes'] == mes) {
+			let mes = Array ()
+			mes = registros[i]
+			valores.mes += parseFloat(mes.valor) 
+			
+		 }
+	}
+
+	console.log(valores.mes)
+	console.log(valores.ano)
+	console.log(valores.horasTrabalhadas)
+	console.log(valores.total)
+
+
+		
+
+	document.getElementById('ganhosMes').innerHTML = `${valores.mes.toFixed(2)} R$`
+	document.getElementById('ganhosAno').innerHTML = `${valores.ano.toFixed(2)} R$` 
+	document.getElementById('ganhosTotais').innerHTML = `${valores.total.toFixed(2)} R$`
+    document.getElementById('horasTrabalhadas').innerHTML = `${valores.horasTrabalhadas.toFixed(2)} Horas`
+
+		
 
 	}
-	 
+
+
+
 
 	
 
 
-function gerarPdf() {
+const gerarPdf = () => {
 	
 	//conteudo do pdf
 	const content = document.querySelector('#content')
