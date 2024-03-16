@@ -313,13 +313,16 @@ const carregaListaRegistros = (registros = Array(), filtro = false) => {
 		btn.className = 'btn btn-danger'
 		btn.innerHTML = "<i class='fas fa-times'></i>"
 		btn.id = `id_registro${registro.id}`
-		btn.onclick =  () => {
+		btn.onclick = function () {
 			//alert(this.id)
 			let id = this.id.replace('id_registro', '')
 			bancoDeDados.remover(id)
 			$('#modal_consulta').modal('show')
+			document.getElementById('modal_header').className = 'modal-header text-success'
 			
-			window.location.reload()
+			
+				
+		
 
 		}
 		linha.insertCell(7).append(btn)
