@@ -301,7 +301,7 @@ const carregaListaRegistros = (registros = Array(), filtro = false) => {
 		linha.insertCell(3).innerHTML = registro.valor
 		linha.insertCell(4).innerHTML = registro.trabalhadores
 		linha.insertCell(5).innerHTML = registro.local
-		if (registro.cargaHoraria == undefined || registro.cargaHoraria == null || registro.cargaHoraria == NaN || registro.cargaHoraria == "") {
+		if (registro.cargaHoraria == undefined || registro.cargaHoraria == null || isNaN(registro.cargaHoraria) || registro.cargaHoraria == "") {
             linha.insertCell(6).innerHTML = 'Sem registro'
 		} else {
 			linha.insertCell(6).innerHTML = registro.cargaHoraria
@@ -375,7 +375,7 @@ const pesquisarRegistro = () => {
 
 	let data = new Date();
 	let dataFormatada = data.toISOString().slice(0,10);
-	console.log(dataFormatada)
+	
 
 	let partesData = dataFormatada.split("-")
 	
@@ -393,11 +393,21 @@ const pesquisarRegistro = () => {
 
 	
 
-	console.log(registros)
-	for (let i = 0; i < registros.length; i++) {
-		
 	
-		valores.horasTrabalhadas += parseFloat(registros[i]['cargaHoraria'])
+	for (let i = 0; i < registros.length; i++) {
+
+		var registroCargaHoraria = parseFloat(registros[i]['cargaHoraria']) 
+        //verifica se os registro no campo de cargar Horaria é 
+		if (isNaN(registroCargaHoraria)) {
+			registros[i]['cargaHoraria'] = 0;
+			
+			
+		} else {
+		 valores.horasTrabalhadas += parseFloat(registros[i]['cargaHoraria']);
+		
+		
+	    
+		
 		valores.total += parseFloat(registros[i]['valor'])
 
 		if (registros[i]['ano'] == ano) {
@@ -415,10 +425,7 @@ const pesquisarRegistro = () => {
 		 }
 	}
 
-	console.log(valores.mes)
-	console.log(valores.ano)
-	console.log(valores.horasTrabalhadas)
-	console.log(valores.total)
+	
 
 
 		
@@ -428,7 +435,7 @@ const pesquisarRegistro = () => {
 	document.getElementById('ganhosTotais').innerHTML = `${valores.total.toFixed(2)} R$`
     document.getElementById('horasTrabalhadas').innerHTML = `${valores.horasTrabalhadas.toFixed(2)} Horas`
 
-		
+}	
 
 	}
 
